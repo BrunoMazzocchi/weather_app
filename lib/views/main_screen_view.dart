@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:weather_app/widgets/city_image.dart';
+
+import '../widgets/city_image_list.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -8,6 +9,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
           padding: const EdgeInsets.only(
@@ -41,7 +43,7 @@ class MainScreen extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.only(top: 30),
-                alignment: const Alignment(-0.8, -0.7),
+                alignment: const Alignment(-0.9, -0.7),
                 child: const Text(
                   "Weather",
                   style: TextStyle(
@@ -53,7 +55,7 @@ class MainScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                width: width - 100,
+                width: width - 50,
                 height: 50,
                 margin: const EdgeInsets.only(
                   top: 20,
@@ -103,7 +105,12 @@ class MainScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              CityImage(width: width - 100)
+              SizedBox(
+                height: height - 220,
+                child: CityImageList(
+                  width: width - 50,
+                ),
+              )
             ],
           )),
     );

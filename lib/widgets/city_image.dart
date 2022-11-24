@@ -1,10 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CityImage extends StatefulWidget {
   final double width;
-
-  const CityImage({Key? key, required this.width}) : super(key: key);
+  final String imagePath;
+  final String temperature;
+  final String city;
+  final Icon icon;
+  final String weather;
+  const CityImage({
+    Key? key,
+    required this.width,
+    required this.imagePath,
+    required this.temperature,
+    required this.city,
+    required this.icon, required this.weather,
+  }) : super(key: key);
 
   @override
   State<CityImage> createState() => _CityImageState();
@@ -19,9 +29,7 @@ class _CityImageState extends State<CityImage> {
         margin: const EdgeInsets.only(
           top: 20,
         ),
-        padding: const EdgeInsets.all(
-          5
-        ),
+        padding: const EdgeInsets.all(5),
         width: widget.width,
         height: 100,
         decoration: BoxDecoration(
@@ -41,20 +49,17 @@ class _CityImageState extends State<CityImage> {
             ],
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: Image.asset("assets/img/managua.jpg").image,
+              image: Image.asset(widget.imagePath).image,
             )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              children: const [
-                Icon(
-                  Icons.sunny,
-                  color: Colors.yellow,
-                ),
-                Text(
-                  "Sunny",
-                  style: TextStyle(
+              children:  [
+                widget.icon,
+                 Text(
+                  widget.weather,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.normal,
                     fontSize: 15,
@@ -64,18 +69,18 @@ class _CityImageState extends State<CityImage> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
-                  "30º",
-                  style: TextStyle(
+                  widget.temperature,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
                 Text(
-                  "Managua",
-                  style: TextStyle(
+                  widget.city,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
