@@ -30,14 +30,14 @@ class MainScreen extends StatelessWidget {
                       icon: const Icon(
                         Icons.menu,
                         color: Color.fromRGBO(6, 57, 112, 1),
-                        size: 45,
+                        size: 35,
                       )),
                   IconButton(
                       onPressed: () {},
                       icon: const Icon(
                         Icons.search,
                         color: Color.fromRGBO(6, 57, 112, 1),
-                        size: 45,
+                        size: 35,
                       ))
                 ],
               ),
