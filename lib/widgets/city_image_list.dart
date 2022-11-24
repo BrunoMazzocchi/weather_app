@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/views/city_data.dart';
 
 import 'city_image.dart';
 
@@ -21,7 +22,10 @@ class CityImageList extends StatelessWidget {
           icon: const Icon(
             Icons.sunny,
             color: Colors.yellow,
-          ), weather: 'Sunny',
+          ), weather: 'Sunny', onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const CityData()));
+        },
         ),
         CityImage(
           width: width,
@@ -31,7 +35,7 @@ class CityImageList extends StatelessWidget {
           icon: const Icon(
             Icons.cloudy_snowing,
             color: Colors.white,
-          ), weather: 'Snowy',
+          ), weather: 'Snowy', onTap: () {  },
         ),
         CityImage(
           width: width,
@@ -41,8 +45,9 @@ class CityImageList extends StatelessWidget {
           icon: const Icon(
             Icons.storm,
             color: Colors.white,
-          ), weather: 'Raining',
+          ), weather: 'Raining', onTap: () {  },
         ),
+
 
       ]);
   }
