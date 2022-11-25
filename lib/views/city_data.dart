@@ -14,21 +14,85 @@ class CityData extends StatelessWidget {
 
     return Scaffold(
       body: SlidingUpPanel(
-
+        minHeight: 150,
+        maxHeight: 350,
         collapsed: Container(
-          decoration:const  BoxDecoration(
-            borderRadius:  BorderRadius.only(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
-
             ),
           ),
         ),
+
+        // Panel in the slider
         panel: Container(
           decoration: const BoxDecoration(
             color: Color.fromRGBO(6, 57, 112, 1),
           ),
+          child: Column(
+            // Column with the next 5 weather days
+            children: [
+              Container(
+                width: 350,
+                  height: 50,
+                  margin: const EdgeInsets.only(
+                    top: 5,
+
+                  ),
+                  decoration: const  BoxDecoration(
+                    border: Border(
+                       bottom: BorderSide(
+                         color: Colors.grey,
+
+                       )
+                    )
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: const [
+                      SizedBox(
+                        width: 80,
+                        child: Text(
+                          "Tomorrow",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 35,
+                        child: Icon(
+                          Icons.sunny,
+                          color: Colors.yellow,
+                          size: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 35,
+                        child: Text(
+                          "32º",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+
+
+            ],
+          ),
         ),
+        // Panel in the background
         body: Container(
           padding: const EdgeInsets.only(
             top: 30,
@@ -37,9 +101,11 @@ class CityData extends StatelessWidget {
           ),
           decoration: BoxDecoration(
               image: DecorationImage(
-            fit: BoxFit.cover,
-            image: Image.asset("assets/img/managua.jpg").image,
-          )),
+                fit: BoxFit.cover,
+                image: Image
+                    .asset("assets/img/managua.jpg")
+                    .image,
+              )),
           child: Column(
             children: [
               Row(
