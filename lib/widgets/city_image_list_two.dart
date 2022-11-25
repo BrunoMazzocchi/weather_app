@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/models/Weather.dart';
 import 'package:weather_app/views/city_data.dart';
 
+import '../models/Weather.dart';
 import 'city_image.dart';
 
-class CityImageList extends StatelessWidget {
-  const CityImageList({Key? key}) : super(key: key);
+class CityImageListTwo extends StatelessWidget {
+
+  const CityImageListTwo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

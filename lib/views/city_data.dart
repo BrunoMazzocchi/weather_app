@@ -1,9 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../models/Weather.dart';
+
 class CityData extends StatelessWidget {
-  const CityData({Key? key}) : super(key: key);
+  final Weather weather;
+
+  const CityData({
+    Key? key,
+    required this.weather,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,60 +41,53 @@ class CityData extends StatelessWidget {
             children: [
               Container(
                 width: 350,
-                  height: 50,
-                  margin: const EdgeInsets.only(
-                    top: 5,
-
-                  ),
-                  decoration: const  BoxDecoration(
-                    border: Border(
-                       bottom: BorderSide(
-                         color: Colors.grey,
-
-                       )
-                    )
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      SizedBox(
-                        width: 80,
-                        child: Text(
-                          "Tomorrow",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 35,
-                        child: Icon(
-                          Icons.sunny,
-                          color: Colors.yellow,
-                          size: 20,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 35,
-                        child: Text(
-                          "32º",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-
-                    ],
-                  ),
+                height: 50,
+                margin: const EdgeInsets.only(
+                  top: 5,
                 ),
-
-
+                decoration: const BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(
+                  color: Colors.grey,
+                ))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [
+                    SizedBox(
+                      width: 80,
+                      child: Text(
+                        "Tomorrow",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 35,
+                      child: Icon(
+                        Icons.sunny,
+                        color: Colors.yellow,
+                        size: 20,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 35,
+                      child: Text(
+                        "32º",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -101,11 +100,9 @@ class CityData extends StatelessWidget {
           ),
           decoration: BoxDecoration(
               image: DecorationImage(
-                fit: BoxFit.cover,
-                image: Image
-                    .asset("assets/img/managua.jpg")
-                    .image,
-              )),
+            fit: BoxFit.cover,
+            image: Image.asset(weather.imagePath).image,
+          )),
           child: Column(
             children: [
               Row(
@@ -120,13 +117,6 @@ class CityData extends StatelessWidget {
                         color: Colors.white,
                         size: 35,
                       )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.search,
-                        color: Colors.white,
-                        size: 35,
-                      ))
                 ],
               ),
               Row(
@@ -139,18 +129,14 @@ class CityData extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Row(
-                            children: const [
-                              Icon(
-                                Icons.sunny,
-                                color: Colors.yellow,
-                                size: 30,
-                              ),
-                              SizedBox(
+                            children: [
+                              weather.icon,
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
-                                "Sunny",
-                                style: TextStyle(
+                                weather.weather,
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 25,
@@ -159,10 +145,10 @@ class CityData extends StatelessWidget {
                             ],
                           ),
                           Row(
-                            children: const [
+                            children: [
                               Text(
-                                "Managua",
-                                style: TextStyle(
+                                weather.city,
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -173,9 +159,9 @@ class CityData extends StatelessWidget {
                           )
                         ],
                       )),
-                  const Text(
-                    "30º",
-                    style: TextStyle(
+                  Text(
+                    weather.temperature,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 45,
                         fontWeight: FontWeight.bold),
