@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Weather {
+class WeatherModel {
   final String city;
   final  String temperature;
   final String country;
   final  String weather;
-  final ImageIcon  icon;
+  final String  icon;
   final String imagePath;
 
-  Weather({
+  WeatherModel({
     required this.city,
     required this.temperature,
     required this.country,

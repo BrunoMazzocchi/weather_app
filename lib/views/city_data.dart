@@ -8,7 +8,7 @@ import '../models/Forecast.dart';
 import '../models/weather_model.dart';
 
 class CityData extends StatelessWidget {
-  final Weather weather;
+  final WeatherModel weather;
   final String apiUrl;
 
   const CityData({
@@ -36,29 +36,33 @@ class CityData extends StatelessWidget {
 
     return Scaffold(
       body: SlidingUpPanel(
-        minHeight: 150,
-        maxHeight: 350,
-        collapsed: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-            ),
+
+          collapsed: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+              )
           ),
-        ),
 
         // Panel in the slider
         panel: FutureBuilder<Forecast>(
           future: getOpenWeather(),
           builder: (context, snapshot) {
-            String icon = '${snapshot.data!.list!.map((e) => e.weather!.map((e) => e.icon))}';
-            var timestamp = snapshot.data!.list!.map((e) => e.dt); // timestamp in seconds
-         /*   final DateTime date =
-                DateTime.fromMillisecondsSinceEpoch((timestamp)1000);
-*/
+
+
+
+
             return ListView.builder(
-                itemCount: 1,
+                itemCount: snapshot.data?.list.length,
                 itemBuilder: (context, index) {
+
+                  String icon = '${snapshot.data?.list[index].weather?.map((e) => e.icon)}';
+                  var timestamp = (snapshot.data?.list[index].dt); // timestamp in seconds
+                  int temp = ((snapshot.data?.list[index].main?.temp)! - 273.15).toInt();
+                  final DateTime date =
+                  DateTime.fromMillisecondsSinceEpoch(timestamp! * 1000);
                   return Container(
                     decoration: const BoxDecoration(
                       color: Color.fromRGBO(6, 57, 112, 1),
@@ -75,16 +79,16 @@ class CityData extends StatelessWidget {
                           decoration: const BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                            color: Colors.grey,
-                          ))),
+                                    color: Colors.grey,
+                                  ))),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               SizedBox(
                                 width: 70,
                                 child: Text(
-                                  // "${date.month}/${date.day}/${date.year}",
-                                  "$timestamp",
+                                   "${date.month}/${date.day}/${date.year}",
+
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontSize: 12,
@@ -95,17 +99,14 @@ class CityData extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: 40,
-                                child: ImageIcon(
-                                  NetworkImage(
-                                      'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png'),
-                                  color: Colors.white,
-                                  size: 30,
+                                child: Image(
+                                  image: Image.network('http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png').image,
                                 ),
                               ),
-                               SizedBox(
+                              SizedBox(
                                 width: 40,
                                 child: Text(
-                                  '${snapshot.data!.list?.map((e) => e.main?.temp)}°',
+                                  '$temp°',
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
                                     fontSize: 20,
@@ -163,7 +164,9 @@ class CityData extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              weather.icon,
+                              Image(
+                                image: Image.network(weather.icon).image,
+                              ),
                               const SizedBox(
                                 width: 5,
                               ),

@@ -1,8 +1,8 @@
 class Wind {
   Wind({
-    required    this.speed,
-    required    this.deg,
-    required    this.gust,});
+   required   this.speed,
+    required  this.deg,
+    required  this.gust,});
 
   Wind.fromJson(dynamic json) {
     speed = json['speed'];

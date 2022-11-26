@@ -1,25 +1,15 @@
 import 'Coord.dart';
 
 class City {
-  int? id;
- late String name;
-  Coord? coord;
-  String? country;
-  int? population;
-  int? timezone;
-  int? sunrise;
-  int? sunset;
-
   City({
-    required this.id,
-    required this.name,
-    required this.coord,
-    required this.country,
-    required this.population,
-    required this.timezone,
-    required this.sunrise,
-    required this.sunset,
-  });
+  required this.id,
+    required   this.name,
+    required    this.coord,
+    required    this.country,
+    required   this.population,
+    required   this.timezone,
+    required   this.sunrise,
+    required this.sunset,});
 
   City.fromJson(dynamic json) {
     id = json['id'];
@@ -31,6 +21,14 @@ class City {
     sunrise = json['sunrise'];
     sunset = json['sunset'];
   }
+  int? id;
+  String? name;
+  Coord? coord;
+  String? country;
+  int? population;
+  int? timezone;
+  int? sunrise;
+  int? sunset;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -46,4 +44,5 @@ class City {
     map['sunset'] = sunset;
     return map;
   }
+
 }

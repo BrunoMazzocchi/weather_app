@@ -1,7 +1,7 @@
 class Coord {
   Coord({
-    required   this.lat,
-    required   this.lon,});
+    required  this.lat,
+    required  this.lon,});
 
   Coord.fromJson(dynamic json) {
     lat = json['lat'];

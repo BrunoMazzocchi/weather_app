@@ -1,43 +1,35 @@
 import 'City.dart';
-import 'List.dart' as model;
-class Forecast {
-  Forecast({
-    required   this.cod,
-    required    this.message,
-    required    this.cnt,
-    required    this.list,
-    required    this.city,});
+import 'List.dart';
 
-  Forecast.fromJson(dynamic json) {
+class Forecast {
+ late  String cod;
+ late int message;
+ late  int cnt;
+ late List<FList> list;
+ late City city;
+
+  Forecast({ required this.cod,required this.message,required this.cnt, required this.list, required this.city});
+
+  Forecast.fromJson(Map<String, dynamic> json) {
     cod = json['cod'];
     message = json['message'];
     cnt = json['cnt'];
     if (json['list'] != null) {
-      list = [];
+      list = <FList>[];
       json['list'].forEach((v) {
-        list?.add(model.ListForecast.fromJson(v));
+        list.add( FList.fromJson(v));
       });
     }
-    city = json['city'] != null ? City.fromJson(json['city']) : null;
+    city = (json['city'] != null ? City.fromJson(json['city']) : null)!;
   }
-  String? cod;
-  int? message;
-  int? cnt;
-  List<model.ListForecast>? list;
-  City? city;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['cod'] = cod;
-    map['message'] = message;
-    map['cnt'] = cnt;
-    if (list != null) {
-      map['list'] = list?.map((v) => v.toJson()).toList();
-    }
-    if (city != null) {
-      map['city'] = city?.toJson();
-    }
-    return map;
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['cod'] = cod;
+    data['message'] = message;
+    data['cnt'] = cnt;
+    data['list'] = list.map((v) => v.toJson()).toList();
+    data['city'] = city.toJson();
+    return data;
   }
-
 }
