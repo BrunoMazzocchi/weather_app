@@ -6,7 +6,6 @@ import 'package:weather_app/models/weather_model.dart' as weatherModel;
 import 'package:weather_app/views/city_data.dart';
 
 import '../models/Forecast.dart';
-import '../models/openWeather.dart';
 import 'city_image.dart';
 
 class CityImageList extends StatelessWidget {
@@ -28,31 +27,45 @@ class CityImageList extends StatelessWidget {
       }
     }
 
+    //snapshot.data!.list!.map((e) => e.weather!.map((e) => e.main)).toString()
+    //${snapshot.data!.list!.map((e) => e.weather!.map((e) => e.icon))}
+    //snapshot.data!.city!.country.toString()
+    //${snapshot.data!.list!.map((e) => e.main!.temp)}°
+    //snapshot.data!.city!.name.toString()
     return FutureBuilder<Forecast>(
       future: getOpenWeather(),
       builder: (context, snapshot) {
         return ListView.builder(
             itemCount: 1,
             itemBuilder: (context, index) {
-              String weatherType = snapshot.data!.weather!.map((e) => e.main).toString();
-              String icon = '${snapshot.data!.weather!.map((e) => e.icon)}';
-              var weather = weatherModel.Weather (
-                country: snapshot.data!.sys!.country.toString(),
-                  imagePath: 'assets/img/managua.jpg',
-                  temperature: '${snapshot.data!.main!.temp?.toInt()}°',
-              city: snapshot.data!.name.toString(),
-              icon: ImageIcon(
-                NetworkImage('http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'),'')}.png'),
-              ),
-              weather: weatherType.replaceAll(RegExp(r'[^\w\s]+'),''));
-              return CityImage(
-                width: width,
-                weather: weather,
-                onTap: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>  CityData(weather: weather, apiUrl: uri,)));
-                },
-              );
+
+                String weatherType = '${snapshot.data?.cnt}';
+                String icon = '10n';
+                var weather = weatherModel.Weather(
+                    country: "",
+                    imagePath: 'assets/img/managua.jpg',
+                    temperature:
+                        '',
+                    city: "",
+                    icon: ImageIcon(
+                      NetworkImage(
+                          'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png'),
+                    ),
+                    weather: weatherType.replaceAll(RegExp(r'[^\w\s]+'), ''));
+                return CityImage(
+                  width: width,
+                  weather: weather,
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CityData(
+                                  weather: weather,
+                                  apiUrl: uri,
+                                )));
+                  },
+                );
+
             });
       },
     );

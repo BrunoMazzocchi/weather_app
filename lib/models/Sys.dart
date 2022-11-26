@@ -1,31 +1,15 @@
 class Sys {
   Sys({
-   required   this.type,
-    required  this.id,
-    required    this.country,
-    required   this.sunrise,
-    required   this.sunset,});
+    required  this.pod,});
 
   Sys.fromJson(dynamic json) {
-    type = json['type'];
-    id = json['id'];
-    country = json['country'];
-    sunrise = json['sunrise'];
-    sunset = json['sunset'];
+    pod = json['pod'];
   }
-  int? type;
-  int? id;
-  String? country;
-  int? sunrise;
-  int? sunset;
+  String? pod;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['type'] = type;
-    map['id'] = id;
-    map['country'] = country;
-    map['sunrise'] = sunrise;
-    map['sunset'] = sunset;
+    map['pod'] = pod;
     return map;
   }
 

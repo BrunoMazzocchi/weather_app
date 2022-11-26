@@ -51,11 +51,11 @@ class CityData extends StatelessWidget {
         panel: FutureBuilder<Forecast>(
           future: getOpenWeather(),
           builder: (context, snapshot) {
-            String icon = '${snapshot.data!.weather!.map((e) => e.icon)}';
-            var timestamp = snapshot.data!.dt; // timestamp in seconds
-            final DateTime date =
-                DateTime.fromMillisecondsSinceEpoch(timestamp! * 1000);
-
+            String icon = '${snapshot.data!.list!.map((e) => e.weather!.map((e) => e.icon))}';
+            var timestamp = snapshot.data!.list!.map((e) => e.dt); // timestamp in seconds
+         /*   final DateTime date =
+                DateTime.fromMillisecondsSinceEpoch((timestamp)1000);
+*/
             return ListView.builder(
                 itemCount: 1,
                 itemBuilder: (context, index) {
@@ -83,7 +83,8 @@ class CityData extends StatelessWidget {
                               SizedBox(
                                 width: 70,
                                 child: Text(
-                                  "${date.month}/${date.day}/${date.year}",
+                                  // "${date.month}/${date.day}/${date.year}",
+                                  "$timestamp",
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontSize: 12,
@@ -104,7 +105,7 @@ class CityData extends StatelessWidget {
                                SizedBox(
                                 width: 40,
                                 child: Text(
-                                  '${snapshot.data!.main!.temp?.toInt()}°',
+                                  '${snapshot.data!.list?.map((e) => e.main?.temp)}°',
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
                                     fontSize: 20,
