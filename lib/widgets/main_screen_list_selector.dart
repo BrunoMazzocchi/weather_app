@@ -13,12 +13,7 @@ class MainScreenListSelector extends StatefulWidget {
 }
 
 class _MainScreenListSelectorState extends State<MainScreenListSelector> {
-  bool isTomorrow = false;
   Widget currentList = const CityImageList();
-
-  String test1 = "Today";
-  String test2 = "Tomorrow";
-
   Widget weatherList = const CityImageList();
   Widget weatherList2 = const CityImageListTwo();
 

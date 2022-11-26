@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../models/weather_model.dart';
+
 class CityImage extends StatefulWidget {
+  final Weather weather;
   final double width;
-  final String imagePath;
-  final String temperature;
-  final String city;
-  final Icon icon;
-  final String weather;
   final VoidCallback onTap;
   const CityImage({
     Key? key,
-    required this.width,
-    required this.imagePath,
-    required this.temperature,
-    required this.city,
-    required this.icon, required this.weather, required this.onTap,
+    required this.weather,
+    required this.onTap, required this.width,
   }) : super(key: key);
 
   @override
@@ -52,23 +47,23 @@ class _CityImageState extends State<CityImage> {
               ],
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: Image.asset(widget.imagePath).image,
+                image: Image.asset(widget.weather.imagePath).image,
               )),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children:  [
-                  widget.icon,
+                  widget.weather.icon,
                   const SizedBox(
-                    width: 5,
+                    width: 10,
                   ),
                   Text(
-                    widget.weather,
+                    widget.weather.weather,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   )
                 ],
@@ -77,7 +72,7 @@ class _CityImageState extends State<CityImage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.temperature,
+                    widget.weather.temperature,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -85,11 +80,11 @@ class _CityImageState extends State<CityImage> {
                     ),
                   ),
                   Text(
-                    widget.city,
+                    widget.weather.city,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 20,
                     ),
                   )
                 ],
