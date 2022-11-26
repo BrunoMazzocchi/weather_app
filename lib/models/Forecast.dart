@@ -1,90 +1,35 @@
-import 'Coord.dart';
-import 'Weather.dart';
-import 'Main.dart';
-import 'Wind.dart';
-import 'Clouds.dart';
-import 'Sys.dart';
+import 'City.dart';
+import 'List.dart';
 
 class Forecast {
-  Coord? coord;
-  List<Weather>? weather;
-  String? base;
-  Main? main;
-  int? visibility;
-  Wind? wind;
-  Clouds? clouds;
-  int? dt;
-  Sys?  sys;
-  int? timezone;
-  int? id;
-  String? name;
-  int? cod;
+ late  String cod;
+ late int message;
+ late  int cnt;
+ late List<FList> list;
+ late City city;
 
-  Forecast({
-    required this.coord,
-    required this.weather,
-    required this.base,
-    required this.main,
-    required this.visibility,
-    required this.wind,
-    required  this.clouds,
-    required  this.dt,
-    required this.sys,
-    required  this.timezone,
-    required   this.id,
-    required    this.name,
-    required   this.cod,});
+  Forecast({ required this.cod,required this.message,required this.cnt, required this.list, required this.city});
 
-  Forecast.fromJson(dynamic json) {
-    coord = json['coord'] != null ? Coord.fromJson(json['coord']) : null;
-    if (json['weather'] != null) {
-      weather = [];
-      json['weather'].forEach((v) {
-        weather?.add(Weather.fromJson(v));
+  Forecast.fromJson(Map<String, dynamic> json) {
+    cod = json['cod'];
+    message = json['message'];
+    cnt = json['cnt'];
+    if (json['list'] != null) {
+      list = <FList>[];
+      json['list'].forEach((v) {
+        list.add( FList.fromJson(v));
       });
     }
-    base = json['base'];
-    main = json['main'] != null ? Main.fromJson(json['main']) : null;
-    visibility = json['visibility'];
-    wind = json['wind'] != null ? Wind.fromJson(json['wind']) : null;
-    clouds = json['clouds'] != null ? Clouds.fromJson(json['clouds']) : null;
-    dt = json['dt'];
-    sys = json['sys'] != null ? Sys.fromJson(json['sys']) : null;
-    timezone = json['timezone'];
-    id = json['id'];
-    name = json['name'];
-    cod = json['cod'];
+    city = (json['city'] != null ? City.fromJson(json['city']) : null)!;
   }
-
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (coord != null) {
-      map['coord'] = coord?.toJson();
-    }
-    if (weather != null) {
-      map['weather'] = weather?.map((v) => v.toJson()).toList();
-    }
-    map['base'] = base;
-    if (main != null) {
-      map['main'] = main?.toJson();
-    }
-    map['visibility'] = visibility;
-    if (wind != null) {
-      map['wind'] = wind?.toJson();
-    }
-    if (clouds != null) {
-      map['clouds'] = clouds?.toJson();
-    }
-    map['dt'] = dt;
-    if (sys != null) {
-      map['sys'] = sys?.toJson();
-    }
-    map['timezone'] = timezone;
-    map['id'] = id;
-    map['name'] = name;
-    map['cod'] = cod;
-    return map;
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['cod'] = cod;
+    data['message'] = message;
+    data['cnt'] = cnt;
+    data['list'] = list.map((v) => v.toJson()).toList();
+    data['city'] = city.toJson();
+    return data;
   }
-
 }

@@ -1,6 +1,6 @@
 class Clouds {
   Clouds({
-      required this.all,});
+     required this.all,});
 
   Clouds.fromJson(dynamic json) {
     all = json['all'];

@@ -1,9 +1,9 @@
 class Weather {
   Weather({
-  required    this.id,
- required     this.main,
-    required   this.description,
-    required  this.icon,});
+   required   this.id,
+    required   this.main,
+    required  this.description,
+    required   this.icon,});
 
   Weather.fromJson(dynamic json) {
     id = json['id'];

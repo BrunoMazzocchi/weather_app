@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/weather_model.dart';
 
 class CityImage extends StatefulWidget {
-  final Weather weather;
+  final WeatherModel weather;
   final double width;
   final VoidCallback onTap;
   const CityImage({
@@ -54,7 +54,9 @@ class _CityImageState extends State<CityImage> {
             children: [
               Row(
                 children:  [
-                  widget.weather.icon,
+                  Image(
+                    image: Image.network(widget.weather.icon).image,
+                  ),
                   const SizedBox(
                     width: 10,
                   ),

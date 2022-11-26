@@ -13,7 +13,7 @@ class CityImageListTwo extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width - 50;
 
-    List<Weather> weatherList = <Weather>[];
+    List<WeatherModel> weatherList = <WeatherModel>[];
 /*
     weatherList.add(Weather(
       city: 'Managua',

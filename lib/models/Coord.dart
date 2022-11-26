@@ -1,22 +1,19 @@
 class Coord {
-
-  double? lon;
-  double? lat;
-
   Coord({
-      required this.lon,
-      required this.lat,});
+    required  this.lat,
+    required  this.lon,});
 
   Coord.fromJson(dynamic json) {
-    lon = json['lon'];
     lat = json['lat'];
+    lon = json['lon'];
   }
-
+  double? lat;
+  double? lon;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['lon'] = lon;
     map['lat'] = lat;
+    map['lon'] = lon;
     return map;
   }
 
