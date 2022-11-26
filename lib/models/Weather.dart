@@ -1,9 +1,8 @@
 class Weather {
   Weather({
-   required   this.id,
-    required   this.main,
-    required  this.description,
-    required   this.icon,});
+  required    this.id,
+    required     this.main,
+    required    this.icon,});
 
   Weather.fromJson(dynamic json) {
     id = json['id'];
@@ -11,10 +10,10 @@ class Weather {
     description = json['description'];
     icon = json['icon'];
   }
-  int? id;
-  String? main;
-  String? description;
-  String? icon;
+late  int id;
+  late String main;
+  late  String description;
+  late  String icon;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

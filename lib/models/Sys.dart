@@ -5,7 +5,7 @@ class Sys {
   Sys.fromJson(dynamic json) {
     pod = json['pod'];
   }
-  String? pod;
+  late  String pod;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

@@ -52,15 +52,15 @@ class CityData extends StatelessWidget {
           builder: (context, snapshot) {
 
 
+            return const Text("Hola");
 
-
-            return ListView.builder(
+         /*  return ListView.builder(
                 itemCount: snapshot.data?.list.length,
                 itemBuilder: (context, index) {
 
-                  String icon = '${snapshot.data?.list[index].weather?.map((e) => e.icon)}';
+                  String icon = '${snapshot.data?.list[index].weather.map((e) => e.icon)}';
                   var timestamp = (snapshot.data?.list[index].dt); // timestamp in seconds
-                  int temp = ((snapshot.data?.list[index].main?.temp)! - 273.15).toInt();
+                  int temp = ((snapshot.data?.list[index].main.temp)! - 273.15).toInt();
                   final DateTime date =
                   DateTime.fromMillisecondsSinceEpoch(timestamp! * 1000);
                   return Container(
@@ -122,6 +122,10 @@ class CityData extends StatelessWidget {
                     ),
                   );
                 });
+
+
+
+           */
           },
         ),
 

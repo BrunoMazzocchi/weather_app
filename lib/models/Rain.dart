@@ -1,11 +1,11 @@
 class Rain {
   Rain({
-   required   this.h,});
+     required this.h,});
 
   Rain.fromJson(dynamic json) {
     h = json['3h'];
   }
-  double? h;
+  late double h;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
