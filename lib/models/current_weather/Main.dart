@@ -1,11 +1,14 @@
 class Main {
   Main({
+
    required   this.temp,
     required this.feelsLike,
     required  this.tempMin,
     required  this.tempMax,
     required  this.pressure,
-    required  this.humidity,});
+    required  this.humidity,
+
+  });
 
   Main.fromJson(dynamic json) {
     temp = json['temp'];
@@ -15,12 +18,13 @@ class Main {
     pressure = json['pressure'];
     humidity = json['humidity'];
   }
-  late double temp;
-  late  double feelsLike;
-  late  double tempMin;
-  late  double tempMax;
-  late int pressure;
-  late int humidity;
+
+  late num temp;
+  late  num feelsLike;
+  late  num tempMin;
+  late  num tempMax;
+  late num pressure;
+  late num humidity;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

@@ -23,16 +23,18 @@ class CityImageList extends StatelessWidget {
     countries.add("Leon,ni");
     countries.add("Chinandega,ni");
     countries.add("Tipitapa,ni");
+    countries.add("Tokyo, jp");
+    countries.add("California, us");
 
 
     const key = '';
-    const uri = "https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely&appid=$key";
+    const uri = "https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely&appid=$key&units=metric";
     Future <List<CurrentWeather>> getOpenWeather() async  {
     List<CurrentWeather> currentWeatherList= [];
 
       for (var element in countries) {
 
-        final response = await http.get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=$element&appid=$key'));
+        final response = await http.get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=$element&appid=$key&units=metric'));
         var data = jsonDecode(response.body.toString());
         if (response.statusCode == 200) {
           currentWeatherList.add(CurrentWeather.fromJson(data));
@@ -56,7 +58,6 @@ class CityImageList extends StatelessWidget {
     return FutureBuilder<List<CurrentWeather>>(
       future: getOpenWeather(),
       builder: (context, snapshot) {
-
         return ListView.builder(
             itemCount: snapshot.data?.length,
             itemBuilder: (context, index) {
@@ -64,6 +65,7 @@ class CityImageList extends StatelessWidget {
               if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               } else if (snapshot.hasData) {
+                print(snapshot.data?.length);
                 String weatherType = '${snapshot.data?[index].weather.map((e) => e.main)}';
                 String icon = '${snapshot.data?[index].weather.map((e) => e.icon)}';
                 String image = imageMix;
