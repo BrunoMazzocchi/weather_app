@@ -1,11 +1,11 @@
 class Clouds {
   Clouds({
-   required   this.all,});
+    required  this.all,});
 
   Clouds.fromJson(dynamic json) {
-    all = json['all'];
+     all = json['all'];
   }
-  late int all;
+ late int all;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

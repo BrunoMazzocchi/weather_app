@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import '../models/Forecast.dart';
+import '../models/forecast_weather/Forecast.dart';
 import '../models/weather_model.dart';
 
 class CityData extends StatelessWidget {
@@ -52,15 +52,13 @@ class CityData extends StatelessWidget {
           builder: (context, snapshot) {
 
 
-            return const Text("Hola");
-
-         /*  return ListView.builder(
-                itemCount: snapshot.data?.list.length,
+            return  ListView.builder(
+                itemCount: snapshot.data?.daily.length,
                 itemBuilder: (context, index) {
 
-                  String icon = '${snapshot.data?.list[index].weather.map((e) => e.icon)}';
-                  var timestamp = (snapshot.data?.list[index].dt); // timestamp in seconds
-                  int temp = ((snapshot.data?.list[index].main.temp)! - 273.15).toInt();
+                  String icon = '${snapshot.data?.daily[index].weather.map((e) => e.icon)}';
+                  var timestamp = (snapshot.data?.daily[index].dt); // timestamp in seconds
+                  int temp = ((snapshot.data?.daily[index].temp.max)!.toInt());
                   final DateTime date =
                   DateTime.fromMillisecondsSinceEpoch(timestamp! * 1000);
                   return Container(
@@ -123,9 +121,6 @@ class CityData extends StatelessWidget {
                   );
                 });
 
-
-
-           */
           },
         ),
 
@@ -161,7 +156,7 @@ class CityData extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                      width: 150,
+                      width: 220,
                       margin: const EdgeInsets.only(top: 20, left: 20),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,

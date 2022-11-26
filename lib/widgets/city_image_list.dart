@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:weather_app/models/current_weather/CurrentWeather.dart';
 
-import '../models/Forecast.dart';
-import '../models/ListForecast.dart';
 import '../models/weather_model.dart' as weatherModel;
 import '../views/city_data.dart';
 import 'city_image.dart';
@@ -26,25 +25,23 @@ class CityImageList extends StatelessWidget {
     countries.add("Tipitapa,ni");
 
 
-
-    const uri = "https://api.openweathermap.org/data/2.5/forecast?q=Managua,ni&exclude=hourl,dailyy&appid=edd08c19bc542d5c0adee3ac5a476856";
-
-    Future <List<Forecast>> getOpenWeather() async  {
-    List<Forecast> forecastList= [];
+    const key = '';
+    const uri = "https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely&appid=$key";
+    Future <List<CurrentWeather>> getOpenWeather() async  {
+    List<CurrentWeather> currentWeatherList= [];
 
       for (var element in countries) {
 
-        final response = await http.get(Uri.parse('https://api.openweathermap.org/data/2.5/forecast?q=$element&exclude=hourl,dailyy&appid='));
+        final response = await http.get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=$element&appid=$key'));
         var data = jsonDecode(response.body.toString());
-
         if (response.statusCode == 200) {
-          forecastList.add(Forecast.fromJson(data));
+          currentWeatherList.add(CurrentWeather.fromJson(data));
           continue;
         } else {
           throw Exception('Failed to load weather for $element');
         }
       }
-      return forecastList;
+      return currentWeatherList;
     }
 
     String imageCloud = 'assets/img/cloud.gif';
@@ -56,7 +53,7 @@ class CityImageList extends StatelessWidget {
     String imageDrizzle = 'assets/image/drizzle.gif';
 
 
-    return FutureBuilder<List<Forecast>>(
+    return FutureBuilder<List<CurrentWeather>>(
       future: getOpenWeather(),
       builder: (context, snapshot) {
 
@@ -64,12 +61,11 @@ class CityImageList extends StatelessWidget {
             itemCount: snapshot.data?.length,
             itemBuilder: (context, index) {
 
-              ListForecast? fList = snapshot.data?[index].list.first;
               if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               } else if (snapshot.hasData) {
-                String weatherType = '${fList!.weather.map((e) => e.main)}';
-                String icon = '${fList!.weather.map((e) => e.icon)}';
+                String weatherType = '${snapshot.data?[index].weather.map((e) => e.main)}';
+                String icon = '${snapshot.data?[index].weather.map((e) => e.icon)}';
                 String image = imageMix;
 
                 switch(weatherType){
@@ -94,10 +90,10 @@ class CityImageList extends StatelessWidget {
                 }
 
                 var weather = weatherModel.WeatherModel(
-                    country: '${snapshot.data?[index].city.country}',
+                    country: '',
                     imagePath: image,
-                    temperature: '${(fList.main!.temp! - 273.15).toInt()}°',
-                    city: '${snapshot.data?[index].city.name}',
+                    temperature: '${(snapshot.data?[index].main.temp)?.toInt()}°',
+                    city: '${snapshot.data?[index].name}',
                     icon: 'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png',
                     weather: weatherType.replaceAll(RegExp(r'[^\w\s]+'), ''));
                 return CityImage(
