@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/views/city_data.dart';
 
-import '../models/Weather.dart';
+import '../models/weather_model.dart';
 import 'city_image.dart';
 
 class CityImageListTwo extends StatelessWidget {
@@ -14,6 +14,7 @@ class CityImageListTwo extends StatelessWidget {
     double width = MediaQuery.of(context).size.width - 50;
 
     List<Weather> weatherList = <Weather>[];
+/*
     weatherList.add(Weather(
       city: 'Managua',
       temperature: '30º',
@@ -26,6 +27,17 @@ class CityImageListTwo extends StatelessWidget {
       imagePath: 'assets/img/managua.jpg',
     ));
 
+    weatherList.add(Weather(
+      imagePath: 'assets/img/london.jpg',
+      temperature: '20º',
+      city: 'London',
+      icon: const Icon(
+        Icons.snowing,
+        color: Colors.white,
+      ),
+      weather: 'Snow',
+      country: 'UK',
+    ));
     weatherList.add(Weather(
       imagePath: 'assets/img/london.jpg',
       temperature: '20º',
@@ -61,6 +73,7 @@ class CityImageListTwo extends StatelessWidget {
       weather: 'Hell',
       country: 'Nicaragua',
     ));
+*/
 
 
     return ListView(
@@ -68,14 +81,10 @@ class CityImageListTwo extends StatelessWidget {
         children: weatherList.map((weather) {
           return CityImage(
             width: width,
-            imagePath: weather.imagePath,
-            temperature: weather.temperature,
-            city: weather.city,
-            icon: weather.icon,
-            weather: weather.temperature,
+            weather: weather,
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>  CityData(weather: weather,)));
+                  MaterialPageRoute(builder: (context) =>  CityData(weather: weather, apiUrl: "",)));
             },
           );
         }).toList());

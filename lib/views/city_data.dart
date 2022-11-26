@@ -1,18 +1,34 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import '../models/Weather.dart';
+import '../models/Forecast.dart';
+import '../models/weather_model.dart';
 
 class CityData extends StatelessWidget {
   final Weather weather;
+  final String apiUrl;
 
   const CityData({
     Key? key,
     required this.weather,
+    required this.apiUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Future<Forecast> getOpenWeather() async {
+      final response = await http.get(Uri.parse(apiUrl));
+      var data = jsonDecode(response.body.toString());
+      if (response.statusCode == 200) {
+        return Forecast.fromJson(data);
+      } else {
+        return Forecast.fromJson(data);
+      }
+    }
+
     BorderRadiusGeometry radius = const BorderRadius.only(
       topLeft: Radius.circular(24.0),
       topRight: Radius.circular(24.0),
@@ -32,65 +48,81 @@ class CityData extends StatelessWidget {
         ),
 
         // Panel in the slider
-        panel: Container(
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(6, 57, 112, 1),
-          ),
-          child: Column(
-            // Column with the next 5 weather days
-            children: [
-              Container(
-                width: 350,
-                height: 50,
-                margin: const EdgeInsets.only(
-                  top: 5,
-                ),
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                  color: Colors.grey,
-                ))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
-                    SizedBox(
-                      width: 80,
-                      child: Text(
-                        "Tomorrow",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+        panel: FutureBuilder<Forecast>(
+          future: getOpenWeather(),
+          builder: (context, snapshot) {
+            String icon = '${snapshot.data!.weather!.map((e) => e.icon)}';
+            var timestamp = snapshot.data!.dt; // timestamp in seconds
+            final DateTime date =
+                DateTime.fromMillisecondsSinceEpoch(timestamp! * 1000);
+
+            return ListView.builder(
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Color.fromRGBO(6, 57, 112, 1),
+                    ),
+                    child: Column(
+                      // Column with the next 5 weather days
+                      children: [
+                        Container(
+                          width: 350,
+                          height: 50,
+                          margin: const EdgeInsets.only(
+                            top: 5,
+                          ),
+                          decoration: const BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                            color: Colors.grey,
+                          ))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SizedBox(
+                                width: 70,
+                                child: Text(
+                                  "${date.month}/${date.day}/${date.year}",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 40,
+                                child: ImageIcon(
+                                  NetworkImage(
+                                      'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png'),
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                              ),
+                               SizedBox(
+                                width: 40,
+                                child: Text(
+                                  '${snapshot.data!.main!.temp?.toInt()}°',
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 35,
-                      child: Icon(
-                        Icons.sunny,
-                        color: Colors.yellow,
-                        size: 20,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 35,
-                      child: Text(
-                        "32º",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+                  );
+                });
+          },
         ),
+
         // Panel in the background
         body: Container(
           padding: const EdgeInsets.only(
