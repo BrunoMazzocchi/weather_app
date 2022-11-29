@@ -74,7 +74,7 @@ class _CityImageState extends State<CityImage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.weather.temperature,
+                    '${widget.weather.main?.temp?.toInt()}°',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

@@ -7,8 +7,8 @@ class Coord {
     lon = json['lon'];
     lat = json['lat'];
   }
- late double lon;
- late double lat;
+ late double? lon;
+ late double? lat;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

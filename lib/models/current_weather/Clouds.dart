@@ -5,7 +5,7 @@ class Clouds {
   Clouds.fromJson(dynamic json) {
      all = json['all'];
   }
- late int all;
+  late num? all;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

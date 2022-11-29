@@ -19,12 +19,12 @@ class Main {
     humidity = json['humidity'];
   }
 
-  late num temp;
-  late  num feelsLike;
-  late  num tempMin;
-  late  num tempMax;
-  late num pressure;
-  late num humidity;
+  late num? temp;
+  late num? feelsLike;
+  late num? tempMin;
+  late num? tempMax;
+  late   num? pressure;
+  late  num? humidity;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

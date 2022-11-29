@@ -1,10 +1,11 @@
 class Sys {
   Sys({
-    required   this.type,
-    required    this.id,
-    required    this.country,
-    required    this.sunrise,
-    required    this.sunset,});
+    required this.type,
+    required this.id,
+    required this.country,
+    required this.sunrise,
+    required this.sunset,
+  });
 
   Sys.fromJson(dynamic json) {
     type = json['type'];
@@ -13,11 +14,12 @@ class Sys {
     sunrise = json['sunrise'];
     sunset = json['sunset'];
   }
-late  int type;
-  late  int id;
-  late  String country;
+
+  late num? type;
+  late num? id;
+  late String country;
   late int sunrise;
-  late  int sunset;
+  late int sunset;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -28,5 +30,4 @@ late  int type;
     map['sunset'] = sunset;
     return map;
   }
-
 }

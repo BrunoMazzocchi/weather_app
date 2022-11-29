@@ -30,19 +30,14 @@ class MainScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print('Hola');
+                      },
                       icon: const Icon(
                         Icons.menu,
                         color: Color.fromRGBO(6, 57, 112, 1),
                         size: 35,
                       )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.search,
-                        color: Color.fromRGBO(6, 57, 112, 1),
-                        size: 35,
-                      ))
                 ],
               ),
               Container(
@@ -59,7 +54,7 @@ class MainScreen extends StatelessWidget {
                 ),
               ),
 
-              MainScreenListSelector(),
+               MainScreenListSelector(),
 
             ],
           )),

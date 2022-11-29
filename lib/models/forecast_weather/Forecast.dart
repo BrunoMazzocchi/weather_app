@@ -5,7 +5,7 @@ class Forecast {
   late double lat;
   late  double lon;
   late  String timezone;
-  late  int timezoneOffset;
+  late  num timezoneOffset;
   late Current current;
   late List<Daily> daily;
 

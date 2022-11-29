@@ -24,9 +24,9 @@ class Daily {
     }
 
   }
- late int dt;
+  int? dt;
 
-  late  Temp temp;
+  late  Temp? temp;
 
 
   late  List<Weather> weather;
@@ -36,6 +36,7 @@ class Daily {
     final map = <String, dynamic>{};
     map['dt'] = dt;
 
+    final temp = this.temp;
     if (temp != null) {
       map['temp'] = temp.toJson();
     }
