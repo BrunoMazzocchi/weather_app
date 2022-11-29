@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import '../models/forecast_weather/Forecast.dart';
+import '../models/forecast_weather/forecast_weather_model.dart';
 import '../models/weather_model.dart';
 
 class CityData extends StatelessWidget {
@@ -20,32 +20,32 @@ class CityData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<Forecast> getOpenWeather() async {
+    Future<ForecastWeather> getOpenWeather() async {
       final response = await http.get(Uri.parse(apiUrl));
       var data = jsonDecode(response.body.toString());
       if (response.statusCode == 200) {
-        return Forecast.fromJson(data);
+        return ForecastWeather.fromJson(data);
       } else {
-        return Forecast.fromJson(data);
+        return ForecastWeather.fromJson(data);
       }
     }
 
     var sunset =
-        DateTime.fromMillisecondsSinceEpoch((weather.sys?.sunset)! * 1000);
+        DateTime.fromMillisecondsSinceEpoch((weather.currentWeather.sys.sunset)! * 1000);
     var sunrise =
-        DateTime.fromMillisecondsSinceEpoch((weather.sys?.sunrise)! * 1000);
+        DateTime.fromMillisecondsSinceEpoch((weather.currentWeather.sys.sunrise)! * 1000);
     var currentHour = DateTime.fromMillisecondsSinceEpoch((weather.dt)! * 1000);
     int time = 1;
 
-    var hour = 24;
+
     String currentHourImage = 'assets/img/night.svg';
-    if (hour <= 10) {
+    if (currentHour.hour <= 10) {
       time = 1;
-    } else if (hour > 10 && hour <= 15) {
+    } else if (currentHour.hour > 10 && currentHour.hour <= 15) {
       time = 2;
-    } else if (hour > 15 && hour <= sunset.hour) {
+    } else if (currentHour.hour > 15 && currentHour.hour <= sunset.hour) {
       time = 3;
-    } else if (hour > sunset.hour) {
+    } else if (currentHour.hour > sunset.hour) {
       time = 4;
     }
     currentHourImage = 'assets/img/night.svg';
@@ -88,82 +88,93 @@ class CityData extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Color.fromRGBO(6, 57, 112, 1),
           ),
-          child: FutureBuilder<Forecast>(
+          child: FutureBuilder<ForecastWeather>(
             future: getOpenWeather(),
             builder: (context, snapshot) {
+
               return ListView.builder(
                   itemCount: snapshot.data?.daily.length,
                   itemBuilder: (context, index) {
-                    String icon =
-                        '${snapshot.data?.daily[index].weather.map((e) => e.icon)}';
+                    if(snapshot.data !=null) {
+                      String icon =
+                          '${snapshot.data?.daily[index].weather.map((e) => e.icon)}';
 
-                    String temp =
-                        (('${snapshot.data?.daily[index].temp?.max.toInt()}'));
+                      String temp =
+                      (('${snapshot.data?.daily[index].temp?.max.toInt()}'));
 
-                    var timestamp = (snapshot
-                        .data?.daily[index].dt); // timestamp in seconds
-                    final DateTime date =
-                        DateTime.fromMillisecondsSinceEpoch(timestamp! * 1000);
+                      var timestamp = (snapshot
+                          .data?.daily[index].dt); // timestamp in seconds
 
-                    return Container(
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(6, 57, 112, 1),
-                      ),
-                      child: Column(
-                        // Column with the next 5 weather days
-                        children: [
-                          Container(
-                            width: 350,
-                            height: 50,
-                            margin: const EdgeInsets.only(
-                              top: 5,
-                            ),
-                            decoration: const BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                              color: Colors.grey,
-                            ))),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                SizedBox(
-                                  width: 70,
-                                  child: Text(
-                                    "${date.month}/${date.day}/${date.year}",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+
+                      final DateTime date =
+                      DateTime.fromMillisecondsSinceEpoch(timestamp! * 1000);
+
+                      return Container(
+                        decoration: const BoxDecoration(
+                          color: Color.fromRGBO(6, 57, 112, 1),
+                        ),
+                        child: Column(
+                          // Column with the next 5 weather days
+                          children: [
+                            Container(
+                              width: 350,
+                              height: 50,
+                              margin: const EdgeInsets.only(
+                                top: 5,
+                              ),
+                              decoration: const BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.grey,
+                                      ))),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  SizedBox(
+                                    width: 70,
+                                    child: Text(
+                                      "${date.month}/${date.day}/${date.year}",
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 40,
-                                  child: Image(
-                                    image: Image.network(
-                                            'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png')
-                                        .image,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 40,
-                                  child: Text(
-                                    '$temp°',
-                                    textAlign: TextAlign.left,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                  SizedBox(
+                                    width: 40,
+                                    child: Image(
+                                      image: Image.network(
+                                          'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png')
+                                          .image,
                                     ),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    width: 40,
+                                    child: Text(
+                                      '$temp°',
+                                      textAlign: TextAlign.left,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const SizedBox(
+                        width: 60,
+                        height: 100,
+                        child: CircularProgressIndicator(),
+                      );
+                    }
                   });
             },
           ),
@@ -240,7 +251,7 @@ class CityData extends StatelessWidget {
                         ],
                       )),
                   Text(
-                    '${weather.main?.temp?.toInt()}°',
+                    '${weather.currentWeather.main?.temp?.toInt()}°',
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 45,
@@ -274,35 +285,35 @@ class CityData extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            'It feels like: ${weather.main?.feelsLike?.toInt()}°',
+                            'It feels like: ${weather.currentWeather.main?.feelsLike?.toInt()}°',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                             ),
                           ),
                           Text(
-                            'Min temperature today: ${weather.main?.tempMin?.toInt()}°',
+                            'Min temperature today: ${weather.currentWeather.main?.tempMin?.toInt()}°',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                             ),
                           ),
                           Text(
-                            'Max temperature today: ${weather.main?.tempMax?.toInt()}°',
+                            'Max temperature today: ${weather.currentWeather.main?.tempMax?.toInt()}°',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                             ),
                           ),
                           Text(
-                            'The pressure today: ${weather.main?.pressure?.toInt()}°',
+                            'The pressure today: ${weather.currentWeather.main?.pressure?.toInt()}°',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                             ),
                           ),
                           Text(
-                            'The pressure today: ${weather.main?.pressure?.toInt()}°',
+                            'The pressure today: ${weather.currentWeather.main?.pressure?.toInt()}°',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,

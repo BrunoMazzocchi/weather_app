@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:weather_app/models/current_weather/CurrentWeather.dart';
+import 'package:weather_app/models/current_weather/current_weather_model.dart';
 
 import '../models/weather_model.dart' as weatherModel;
+import '../models/weather_model.dart';
 import '../views/city_data.dart';
 import 'city_image.dart';
 
@@ -29,8 +30,7 @@ class CityImageList extends StatelessWidget {
     countries.add("Toronto, ca");
 
     const key = '';
-    const uri =
-        "https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely&appid=$key&units=metric";
+
     Future<List<CurrentWeather>> getOpenWeather() async {
       List<CurrentWeather> currentWeatherList = [];
 
@@ -91,17 +91,18 @@ class CityImageList extends StatelessWidget {
                     break;
                 }
 
-                var weather = weatherModel.WeatherModel(
+                WeatherModel weather = weatherModel.WeatherModel(
                      dt: snapshot.data?[index].dt,
-                    sys: snapshot.data?[index].sys,
+
                     imagePath: image,
-                    wind: snapshot.data?[index].wind,
-                    main:
-                        snapshot.data?[index].main,
+                    currentWeather: snapshot.data![index],
                     city: '${snapshot.data?[index].name}',
                     icon:
                         'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png',
                     weather: weatherType.replaceAll(RegExp(r'[^\w\s]+'), ''));
+
+                String coord = 'lat=${weather.currentWeather.coord.lat}&lon=${weather.currentWeather.coord.lon}';
+                var uri = "https://api.openweathermap.org/data/3.0/onecall?$coord&exclude=hourly,minutely&appid=$key&units=metric";
                 return CityImage(
                   width: width,
                   weather: weather,
