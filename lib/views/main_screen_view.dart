@@ -1,8 +1,7 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:weather_app/bloc/bloc_weather.dart';
 
-import '../widgets/city_image_list.dart';
 import '../widgets/main_screen_list_selector.dart';
 
 class MainScreen extends StatelessWidget {
@@ -10,7 +9,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    BlocWeather blocWeather = BlocProvider.of<BlocWeather>(context);
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -53,9 +52,7 @@ class MainScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-               MainScreenListSelector(),
-
+              const MainScreenListSelector(),
             ],
           )),
     );
