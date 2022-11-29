@@ -13,12 +13,11 @@ class MainScreenListSelector extends StatefulWidget {
 }
 
 class _MainScreenListSelectorState extends State<MainScreenListSelector> {
-  Widget currentList = const CityImageList();
-  Widget weatherList = const CityImageList();
+
+
+  Widget currentList =  const CityImageList();
+  Widget weatherList =  const CityImageList();
   Widget weatherList2 = const CityImageListTwo();
-
-
-
 
   changeWeather(int list) {
     setState(() {

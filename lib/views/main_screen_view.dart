@@ -1,14 +1,17 @@
+
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:weather_app/widgets/main_screen_list_selector.dart';
 
 import '../widgets/city_image_list.dart';
+import '../widgets/main_screen_list_selector.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -27,19 +30,14 @@ class MainScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print('Hola');
+                      },
                       icon: const Icon(
                         Icons.menu,
                         color: Color.fromRGBO(6, 57, 112, 1),
                         size: 35,
                       )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.search,
-                        color: Color.fromRGBO(6, 57, 112, 1),
-                        size: 35,
-                      ))
                 ],
               ),
               Container(
@@ -56,7 +54,7 @@ class MainScreen extends StatelessWidget {
                 ),
               ),
 
-               const MainScreenListSelector(),
+               MainScreenListSelector(),
 
             ],
           )),

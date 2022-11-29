@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sliding_up_panel: ^2.0.0+1
   http: ^0.13.5
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:
@@ -63,10 +64,17 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/img/managua.jpg
-    - assets/img/toronto.jpg
-    - assets/img/london.jpg
-    - assets/img/leon.jpg
+    - assets/bg/clear.gif
+    - assets/bg/cloud.gif
+    - assets/bg/drizzle.gif
+    - assets/bg/mix.gif
+    - assets/bg/rain.gif
+    - assets/bg/snow.gif
+    - assets/bg/storm.gif
+    - assets/img/noun.svg
+    - assets/img/afternoon.svg
+    - assets/img/sun.svg
+    - assets/img/night.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
