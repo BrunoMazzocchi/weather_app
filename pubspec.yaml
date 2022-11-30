@@ -42,6 +42,7 @@ dependencies:
   flutter_bloc: ^8.1.1
   generic_bloc_provider: ^2.1.1
   dio: ^4.0.6
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:

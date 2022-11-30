@@ -34,6 +34,10 @@ class CurrentWeather {
     cod = json['cod'];
   }
 
+  CurrentWeather.withError(String errorMessage) {
+    error = errorMessage;
+  }
+
   late Coord coord;
   late List<Weather>? weather;
   late String base;
@@ -48,6 +52,7 @@ class CurrentWeather {
   late num? id;
   late String name;
   late num? cod;
+  String? error;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

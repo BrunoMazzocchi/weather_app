@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:weather_app/blocs/weather_bloc.dart';
 
 import '../models/forecast_weather/forecast_weather_model.dart';
 import '../models/weather_model.dart';
@@ -20,15 +22,7 @@ class CityData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<ForecastWeather> getOpenWeather() async {
-      final response = await http.get(Uri.parse(apiUrl));
-      var data = jsonDecode(response.body.toString());
-      if (response.statusCode == 200) {
-        return ForecastWeather.fromJson(data);
-      } else {
-        return ForecastWeather.fromJson(data);
-      }
-    }
+    WeatherBloc weatherBloc = BlocProvider.of(context);
 
     var sunset =
         DateTime.fromMillisecondsSinceEpoch((weather.currentWeather.sys.sunset)! * 1000);
@@ -89,7 +83,7 @@ class CityData extends StatelessWidget {
             color: Color.fromRGBO(6, 57, 112, 1),
           ),
           child: FutureBuilder<ForecastWeather>(
-            future: getOpenWeather(),
+            future: weatherBloc.getCurrentForecast(''),
             builder: (context, snapshot) {
 
               return ListView.builder(
