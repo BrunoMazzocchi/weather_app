@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-import '../models/country_list_model.dart';
 import '../models/current_weather/current_weather_model.dart';
 import 'city_image_list.dart';
 

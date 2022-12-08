@@ -2,10 +2,9 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-class CustomDrawer extends StatefulWidget {
+class CustomDrawer extends StatefulWidget  {
   final LinkedHashMap<String?, List<String>?> citiesList;
   final Function changeList;
-
   const CustomDrawer({
     Key? key,
     required this.citiesList,
@@ -86,10 +85,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       onChanged: (value) {
                         filterSearchResults(value);
                       },
+                      style: const TextStyle(color: Colors.white),
                       controller: editingController,
                       decoration: const InputDecoration(
                           labelText: "Search",
                           hintText: "Search",
+                          hintStyle: TextStyle(color: Colors.white),
+                          labelStyle: TextStyle(color: Colors.white),
                           prefixIcon: Icon(Icons.search),
                           border: OutlineInputBorder(
                               borderRadius:

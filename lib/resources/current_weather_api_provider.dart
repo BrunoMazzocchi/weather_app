@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/current_weather/current_weather_model.dart';
 
@@ -11,7 +12,7 @@ class CurrentWeatherApiProvider {
     try {
       for (String city in countries) {
         Response response = await _dio.get(
-            'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=&units=metric');
+            'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=${dotenv.env['API_KEY']}&units=metric');
         if (response.statusCode == 404) {
             continue;
         } else if (response.statusCode == 200) {
@@ -20,9 +21,13 @@ class CurrentWeatherApiProvider {
       }
     } on DioError catch (e) {
       if (e.response?.statusCode == 404) {
-        print(e.response?.statusCode);
+        if (kDebugMode) {
+          print(e.response?.statusCode);
+        }
       } else {
-        print(e.message);
+        if (kDebugMode) {
+          print(e.message);
+        }
       }
     } catch (error, stacktrace) {
       if (kDebugMode) {

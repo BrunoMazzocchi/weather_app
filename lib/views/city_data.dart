@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:http/http.dart' as http;
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:weather_app/blocs/weather_bloc.dart';
 
@@ -12,58 +9,21 @@ import '../models/weather_model.dart';
 
 class CityData extends StatelessWidget {
   final WeatherModel weather;
-  final String apiUrl;
 
   const CityData({
     Key? key,
     required this.weather,
-    required this.apiUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     WeatherBloc weatherBloc = BlocProvider.of(context);
 
-    var sunset =
-        DateTime.fromMillisecondsSinceEpoch((weather.currentWeather.sys.sunset)! * 1000);
-    var sunrise =
-        DateTime.fromMillisecondsSinceEpoch((weather.currentWeather.sys.sunrise)! * 1000);
-    var currentHour = DateTime.fromMillisecondsSinceEpoch((weather.dt)! * 1000);
-    int time = 1;
+    var sunset = DateTime.fromMillisecondsSinceEpoch(
+        (weather.currentWeather.sys.sunset) * 1000);
+    var sunrise = DateTime.fromMillisecondsSinceEpoch(
+        (weather.currentWeather.sys.sunrise) * 1000);
 
-
-    String currentHourImage = 'assets/img/night.svg';
-    if (currentHour.hour <= 10) {
-      time = 1;
-    } else if (currentHour.hour > 10 && currentHour.hour <= 15) {
-      time = 2;
-    } else if (currentHour.hour > 15 && currentHour.hour <= sunset.hour) {
-      time = 3;
-    } else if (currentHour.hour > sunset.hour) {
-      time = 4;
-    }
-    currentHourImage = 'assets/img/night.svg';
-    switch (time) {
-      case 1:
-        currentHourImage = 'assets/img/noun.svg';
-        break;
-      case 2:
-        currentHourImage = 'assets/img/sun.svg';
-        break;
-      case 3:
-        currentHourImage = 'assets/img/afternoon.svg';
-        break;
-      case 4:
-        currentHourImage = 'assets/img/night.svg';
-        break;
-    }
-
-
-
-    BorderRadiusGeometry radius = const BorderRadius.only(
-      topLeft: Radius.circular(24.0),
-      topRight: Radius.circular(24.0),
-    );
 
     return Scaffold(
       body: SlidingUpPanel(
@@ -89,19 +49,18 @@ class CityData extends StatelessWidget {
               return ListView.builder(
                   itemCount: snapshot.data?.daily.length,
                   itemBuilder: (context, index) {
-                    if(snapshot.data !=null) {
+                    if (snapshot.data != null) {
                       String icon =
                           '${snapshot.data?.daily[index].weather.map((e) => e.icon)}';
 
                       String temp =
-                      (('${snapshot.data?.daily[index].temp?.max.toInt()}'));
+                          (('${snapshot.data?.daily[index].temp?.max.toInt()}'));
 
                       var timestamp = (snapshot
                           .data?.daily[index].dt); // timestamp in seconds
 
-
-                      final DateTime date =
-                      DateTime.fromMillisecondsSinceEpoch(timestamp! * 1000);
+                      final DateTime date = DateTime.fromMillisecondsSinceEpoch(
+                          timestamp! * 1000);
 
                       return Container(
                         decoration: const BoxDecoration(
@@ -119,10 +78,11 @@ class CityData extends StatelessWidget {
                               decoration: const BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(
-                                        color: Colors.grey,
-                                      ))),
+                                color: Colors.grey,
+                              ))),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   SizedBox(
                                     width: 70,
@@ -140,7 +100,7 @@ class CityData extends StatelessWidget {
                                     width: 40,
                                     child: Image(
                                       image: Image.network(
-                                          'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png')
+                                              'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png')
                                           .image,
                                     ),
                                   ),
@@ -320,7 +280,7 @@ class CityData extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         SvgPicture.asset(
-                          currentHourImage,
+                          weatherBloc.hourImage(weather),
                           color: Colors.black,
                           width: 50,
                           height: 50,

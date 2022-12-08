@@ -23,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
   List currentList = [];
   LinkedHashMap<String?, List<String>?> citiesList = LinkedHashMap();
 
-  List<CountryList> countries = [];
+  List<CountryList> countriesList = [];
 
   Widget topIconBar() {
     return Row(
@@ -96,7 +96,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     WeatherBloc blocWeather = BlocProvider.of<WeatherBloc>(context);
-    Future<List<CountryList>> countryList = blocWeather.getCountryList();
 
     List<CountryList> getCountries() {
       countryList.then((value) {
@@ -120,6 +119,26 @@ class _MainScreenState extends State<MainScreen> {
 
     createCountryList();
 
+    Future<List<CountryList>> getCountries() async {
+      List<CountryList> countries = await blocWeather.getCountryList();
+      for (var country in countries) {
+        countriesList.add(country);
+      }
+      return countriesList;
+    }
+
+    Future<LinkedHashMap<String?, List<String>?>> createCountryList() async {
+      await getCountries();
+      for (var element in countriesList) {
+        element.data?.forEach((country) {
+          citiesList.addAll({country.country: country.cities});
+        });
+      }
+      return citiesList;
+    }
+
+
+    createCountryList();
     return Scaffold(
       key: _scaffoldKey,
       body: bodyContainer(blocWeather),
