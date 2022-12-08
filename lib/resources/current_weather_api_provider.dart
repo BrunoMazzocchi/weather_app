@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import '../models/current_weather/current_weather_model.dart';
 
 class CurrentWeatherApiProvider {
-  final key = '';
   final Dio _dio = Dio();
 
   Future<List<CurrentWeather>> fetchCurrentWeatherList(List countries) async {
@@ -12,7 +11,7 @@ class CurrentWeatherApiProvider {
     try {
       for (String city in countries) {
         Response response = await _dio.get(
-            'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=0472b4b25ca6f14090f7c846ef25e025&units=metric');
+            'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=&units=metric');
         if (response.statusCode == 404) {
             continue;
         } else if (response.statusCode == 200) {
