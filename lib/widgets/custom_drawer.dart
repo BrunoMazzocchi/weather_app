@@ -86,10 +86,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       onChanged: (value) {
                         filterSearchResults(value);
                       },
+                      style: const TextStyle(color: Colors.white),
                       controller: editingController,
                       decoration: const InputDecoration(
                           labelText: "Search",
                           hintText: "Search",
+                          hintStyle: TextStyle(color: Colors.white),
+                          labelStyle: TextStyle(color: Colors.white),
                           prefixIcon: Icon(Icons.search),
                           border: OutlineInputBorder(
                               borderRadius:

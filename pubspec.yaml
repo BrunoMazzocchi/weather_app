@@ -43,6 +43,7 @@ dependencies:
   generic_bloc_provider: ^2.1.1
   dio: ^4.0.6
   equatable: ^2.0.5
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +81,7 @@ flutter:
     - assets/img/sun.svg
     - assets/img/night.svg
     - assets/country_list.json
+    - lib/.env # path to your .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
