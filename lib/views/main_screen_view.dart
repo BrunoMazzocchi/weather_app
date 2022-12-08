@@ -96,28 +96,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     WeatherBloc blocWeather = BlocProvider.of<WeatherBloc>(context);
-
-    List<CountryList> getCountries() {
-      countryList.then((value) {
-        for (var element in value) {
-          countries.add(element);
-        }
-      });
-      return countries;
-    }
-
-    LinkedHashMap<String?, List<String>?> createCountryList() {
-      getCountries();
-      for (var element in countries) {
-        element.data?.forEach((country) {
-          citiesList.addAll({country.country: country.cities});
-        });
-      }
-
-      return citiesList;
-    }
-
-    createCountryList();
+    
 
     Future<List<CountryList>> getCountries() async {
       List<CountryList> countries = await blocWeather.getCountryList();
