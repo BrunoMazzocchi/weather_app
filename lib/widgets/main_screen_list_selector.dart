@@ -1,36 +1,20 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
+import '../models/country_list_model.dart';
+import '../models/current_weather/current_weather_model.dart';
 import 'city_image_list.dart';
-import 'city_image_list_two.dart';
 
-class MainScreenListSelector extends StatefulWidget {
+class MainScreenListSelector extends StatelessWidget {
+   final Future<List<CurrentWeather>> currentWeatherList;
+
+
   const MainScreenListSelector({
     Key? key,
+    required this.currentWeatherList,
+    // required this.currentWeatherList,
   }) : super(key: key);
-
-  @override
-  State<MainScreenListSelector> createState() => _MainScreenListSelectorState();
-}
-
-class _MainScreenListSelectorState extends State<MainScreenListSelector> {
-
-
-  Widget currentList =  const CityImageList();
-  Widget weatherList =  const CityImageList();
-  Widget weatherList2 = const CityImageListTwo();
-
-  changeWeather(int list) {
-    setState(() {
-      switch (list) {
-        case 1:
-          currentList = weatherList;
-          break;
-        case 2:
-          currentList = weatherList2;
-          break;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,37 +49,24 @@ class _MainScreenListSelectorState extends State<MainScreenListSelector> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               InkWell(
-                  onTap: () {
-                    changeWeather(1);
-                  },
+                  onTap: () {},
                   child: const Text(
-                    "Today",
+                    "Today's weather",
                     style: TextStyle(
                       color: Color.fromRGBO(6, 57, 112, 1),
                       fontSize: 15.0,
-                      fontFamily: "",
                       fontWeight: FontWeight.bold,
                     ),
                   )),
-              InkWell(
-                  onTap: () {
-                    changeWeather(2);
-                  },
-                  child: const Text(
-                    "Tomorrow",
-                    style: TextStyle(
-                      color: Color.fromRGBO(6, 57, 112, 1),
-                      fontSize: 15.0,
-                      fontFamily: "",
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ))
             ],
           )),
+
+
       SizedBox(
         height: height,
-        child: currentList,
-      )
+        child: CityImageList(countries: currentWeatherList,),
+      ),
+
     ]);
   }
 }

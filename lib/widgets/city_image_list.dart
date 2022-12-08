@@ -1,39 +1,22 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:weather_app/blocs/weather_bloc.dart';
+
 import 'package:weather_app/models/current_weather/current_weather_model.dart';
 
-import '../models/weather_model.dart' as weatherModel;
+import '../models/weather_model.dart' as weather_model;
 import '../models/weather_model.dart';
 import '../views/city_data.dart';
 import 'city_image.dart';
 
 class CityImageList extends StatelessWidget {
-  const CityImageList({Key? key}) : super(key: key);
+   final  Future<List<CurrentWeather>> countries;
+  const CityImageList({
+    Key? key,
+     required this.countries,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    WeatherBloc weatherBloc = BlocProvider.of(context);
     double width = MediaQuery.of(context).size.width;
-
-    List countries = [];
-
-    countries.add("Managua,ni");
-    countries.add("Masaya,ni");
-    countries.add("Jinotega,ni");
-    countries.add("Esteli,ni");
-    countries.add("Leon,ni");
-    countries.add("Chinandega,ni");
-    countries.add("Tipitapa,ni");
-    countries.add("Tokyo, jp");
-    countries.add("California, us");
-    countries.add("Zaragoza");
-    countries.add("Toronto, ca");
-
-
 
     String imageCloud = 'assets/bg/cloud.gif';
     String imageRain = 'assets/bg/rain.gif';
@@ -43,8 +26,9 @@ class CityImageList extends StatelessWidget {
     String imageClear = 'assets/bg/clear.gif';
     String imageDrizzle = 'assets/bg/drizzle.gif';
 
+
     return FutureBuilder<List<CurrentWeather>>(
-      future: weatherBloc.getCurrentWeatherList(countries),
+      future: countries,
       builder: (context, snapshot) {
         return ListView.builder(
             itemCount: snapshot.data?.length,
@@ -79,9 +63,8 @@ class CityImageList extends StatelessWidget {
                     break;
                 }
 
-                WeatherModel weather = weatherModel.WeatherModel(
-                     dt: snapshot.data?[index].dt,
-
+                WeatherModel weather = weather_model.WeatherModel(
+                    dt: snapshot.data?[index].dt,
                     imagePath: image,
                     currentWeather: snapshot.data![index],
                     city: '${snapshot.data?[index].name}',
@@ -89,8 +72,8 @@ class CityImageList extends StatelessWidget {
                         'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png',
                     weather: weatherType.replaceAll(RegExp(r'[^\w\s]+'), ''));
 
-                String coord = 'lat=${weather.currentWeather.coord.lat}&lon=${weather.currentWeather.coord.lon}';
-                var uri = "https://api.openweathermap.org/data/3.0/onecall?$coord&exclude=hourly,minutely&appid=$key&units=metric";
+
+                String uri = '';
                 return CityImage(
                   width: width,
                   weather: weather,
@@ -107,7 +90,7 @@ class CityImageList extends StatelessWidget {
               } else {
                 return const SizedBox(
                   width: 60,
-                  height: 60,
+                  height:  60,
                   child: CircularProgressIndicator(),
                 );
               }
