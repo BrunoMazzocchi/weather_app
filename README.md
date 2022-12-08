@@ -1,16 +1,14 @@
-# weather_app
+# Weather App
 
-Flutter weather app using weatherstack API
+Weather app built with Flutter
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a side project to know what I'm able to code right now as my first personal project. 
 
-A few resources to get you started if this is your first Flutter project:
+To build the application I used bloc pattern and a generic bloc provider (weather bloc provider)
+I'm using three API
+Open weather API to get the current weather and 5 day forecast 
+Country API to get a list of countries and their cities
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+For the same reason, some cities and countries might not work properly, as the Open Weather API won't recognize them
