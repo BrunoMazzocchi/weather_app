@@ -2,10 +2,9 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-class CustomDrawer extends StatefulWidget {
+class CustomDrawer extends StatefulWidget  {
   final LinkedHashMap<String?, List<String>?> citiesList;
   final Function changeList;
-
   const CustomDrawer({
     Key? key,
     required this.citiesList,
@@ -17,6 +16,7 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
+
   TextEditingController editingController = TextEditingController();
   LinkedHashMap<String?, List<String>?> duplicate = LinkedHashMap();
 
