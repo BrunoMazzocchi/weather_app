@@ -12,14 +12,22 @@ class CurrentWeatherApiProvider {
     try {
       for (String city in countries) {
         Response response = await _dio.get(
-            'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=&units=metric');
-        if (response.statusCode == 200) {
+            'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=0472b4b25ca6f14090f7c846ef25e025&units=metric');
+        if (response.statusCode == 404) {
+            continue;
+        } else if (response.statusCode == 200) {
           currentWeatherList.add(CurrentWeather.fromJson(response.data));
         }
       }
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 404) {
+        print(e.response?.statusCode);
+      } else {
+        print(e.message);
+      }
     } catch (error, stacktrace) {
       if (kDebugMode) {
-        print("Exception ocurred: $error Stacktrace: $stacktrace");
+        print("Exception occurred: $error Stacktrace: $stacktrace");
       }
 
       throw Exception('Failed to load weather');

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 
     return BlocProvider(
       bloc: WeatherBloc(),
-      child: const MaterialApp(home: MainScreen()),
+      child: const  MaterialApp(home: MainScreen()),
     );
   }
 }
