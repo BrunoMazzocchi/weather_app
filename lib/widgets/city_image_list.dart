@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:weather_app/blocs/weather_bloc.dart';
 import 'package:weather_app/models/current_weather/current_weather_model.dart';
-import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 
 import '../constants/assets_constants.dart';
 import '../models/weather_model.dart' as weather_model;
@@ -19,11 +19,8 @@ class CityImageList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     WeatherBloc weatherBloc = BlocProvider.of(context);
     double width = MediaQuery.of(context).size.width;
-
-
 
     return FutureBuilder<List<CurrentWeather>>(
       future: countries,
@@ -34,36 +31,53 @@ class CityImageList extends StatelessWidget {
               if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               } else if (snapshot.hasData) {
-                // These are coming from 'constants/assets_constants'
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                    return const Text("Something went wrong");
+                    break;
+                  case ConnectionState.waiting:
+                  case ConnectionState.active:
+                    return const SizedBox(
+                      width: 60,
+                      height: 150,
+                      child: CircularProgressIndicator(
 
-                weatherType =
-                    '${snapshot.data?[index].weather?.map((e) => e.main)}';
+                      ),
+                    );
+                  case ConnectionState.done:
+                    // These are coming from 'constants/assets_constants'
 
-                String icon =
-                    '${snapshot.data?[index].weather?.map((e) => e.icon)}';
+                    weatherType =
+                        '${snapshot.data?[index].weather?.map((e) => e.main)}';
 
+                    String icon =
+                        '${snapshot.data?[index].weather?.map((e) => e.icon)}';
 
-                String image = weatherBloc.weatherBackground();
+                    String image = weatherBloc.weatherBackground();
 
-                WeatherModel weather = weather_model.WeatherModel(
-                    dt: snapshot.data?[index].dt,
-                    imagePath: image,
-                    currentWeather: snapshot.data![index],
-                    city: '${snapshot.data?[index].name}',
-                    icon: // Gets the icon image and remove everything just in case
-                        'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png',
-                    weather: weatherType.replaceAll(RegExp(r'[^\w\s]+'), ''));
+                    WeatherModel weather = weather_model.WeatherModel(
+                        dt: snapshot.data?[index].dt,
+                        imagePath: image,
+                        currentWeather: snapshot.data![index],
+                        city: '${snapshot.data?[index].name}',
+                        icon: // Gets the icon image and remove everything just in case
+                            'http://openweathermap.org/img/w/${icon.replaceAll(RegExp(r'[^\w\s]+'), '')}.png',
+                        weather:
+                            weatherType.replaceAll(RegExp(r'[^\w\s]+'), ''));
 
-                return CityImage(
-                  width: width,
-                  weather: weather,
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CityData(weather: weather)));
-                  },
-                );
+                    return CityImage(
+                      width: width,
+                      weather: weather,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CityData(weather: weather)));
+                      },
+                    );
+                    break;
+                }
               } else {
                 return const SizedBox(
                   width: 60,
@@ -71,10 +85,10 @@ class CityImageList extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
+
+              return const CircularProgressIndicator();
             });
       },
     );
-
-
   }
 }
